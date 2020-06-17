@@ -495,11 +495,7 @@ static void srat_detect_node(struct cpuinfo_x86 *c)
 #define TME_ACTIVATE_CRYPTO_ALGS(x)	((x >> 48) & 0xffff)	/* Bits 63:48 */
 #define TME_ACTIVATE_CRYPTO_AES_XTS_128	1
 
-/* Values for mktme_status (SW only construct) */
-#define MKTME_ENABLED			0
-#define MKTME_DISABLED			1
-#define MKTME_UNINITIALIZED		2
-static int mktme_status = MKTME_UNINITIALIZED;
+static enum mktme_status_type mktme_status = MKTME_UNINITIALIZED;
 
 static void detect_tme(struct cpuinfo_x86 *c)
 {
@@ -1113,6 +1109,12 @@ bool handle_user_split_lock(struct pt_regs *regs, long error_code)
 	split_lock_warn(regs->ip);
 	return true;
 }
+
+enum mktme_status_type get_mktme_status(void)
+{
+    return mktme_status;
+}
+EXPORT_SYMBOL_GPL(get_mktme_status);
 
 /*
  * This function is called only when switching between tasks with

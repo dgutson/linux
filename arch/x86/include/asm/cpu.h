@@ -26,6 +26,14 @@ struct x86_cpu {
 	struct cpu cpu;
 };
 
+enum mktme_status_type {
+    MKTME_ENABLED,
+    MKTME_DISABLED,
+    MKTME_UNINITIALIZED
+};
+
+extern enum mktme_status_type get_mktme_status(void);
+
 #ifdef CONFIG_HOTPLUG_CPU
 extern int arch_register_cpu(int num);
 extern void arch_unregister_cpu(int);
